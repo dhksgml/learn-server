@@ -9,7 +9,7 @@ function A(gameName,nickname,Score)
             // console.log("게임이름 있어요");
             //2.있으면 data를 돌며 nickName이 있나 확인  !hint: 반복문
             i.data.findIndex((j)=>{
-                if(j.nickName)
+                if(j.nickName==nickname)
                 {
                     // console.log("닉네임 있어요");
                     //3.nickName있으면, score만 업데이트
@@ -18,12 +18,13 @@ function A(gameName,nickname,Score)
                 }
                 else{
                     //4.없으면 data에 {nickName:nickname,score:score,rank:0}을 push 
-                    i.data[i+1] = {nickName:nickname,score:Score,rank:0};
+                    i.data.push({nickName:nickname,score:Score,rank:0});
+                    
                 }
             });
         }
         else{
-            console.log("그런 게임은 없어요");
+            // console.log("그런 게임은 없어요");
             return false;
         }
     });
@@ -36,5 +37,9 @@ A("lol","B",80);
 A("test","C",90);
 
 arr.forEach((i) => {
-    console.log(i.data);
+    i.data.forEach((j)=>{
+        console.log(j);
+    })
 });
+
+// console.log(arr.data);
