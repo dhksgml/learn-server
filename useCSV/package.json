@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "csv-parse": "^4.16.3",
+    "csv-parser": "^3.0.0",
+    "csv-writer": "^1.6.0",
+    "event-stream": "^4.0.1",
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7"
+  }
+}
