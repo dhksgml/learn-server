@@ -4,7 +4,7 @@
   "description": "노드버드 2차 서비스",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app"
+    "start": "node app"
   },
   "author": "Zero Cho",
   "license": "ISC",
@@ -19,6 +19,6 @@
     "nunjucks": "^3.2.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.13"
   }
 }
