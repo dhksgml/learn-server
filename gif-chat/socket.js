@@ -9,6 +9,8 @@ module.exports = (server, app, sessionMiddleware) => {
   const room = io.of('/room');
   const chat = io.of('/chat');
 
+  
+
   io.use((socket, next) => {
     cookieParser(process.env.COOKIE_SECRET)(socket.request, socket.request.res, next);
     sessionMiddleware(socket.request, socket.request.res, next);
@@ -16,6 +18,7 @@ module.exports = (server, app, sessionMiddleware) => {
 
   room.on('connection', (socket) => {
     console.log('room 네임스페이스에 접속');
+
     socket.on('disconnect', () => {
       console.log('room 네임스페이스 접속 해제');
     });
