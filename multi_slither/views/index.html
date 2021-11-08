@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slither</title>
+    <!-- <script src="/socket.io/socket.io.js"></script> -->
+    <script src="../routes/slither.js"></script>
+    
+    <!-- <script>
+        const socket = io.connect('http://localhost:8005',{
+            path: '/socket.io',
+            transports: ['websocket'],
+        });
+        socket.on('news',function(data){
+            console.log(data);
+            socket.emit('reply','Hello Node.JS');
+        })
+    </script>
+     -->
+    <style>
+        canvas{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body onload="init()">
+    <canvas id="myCanvas" width="500" height="500">
+        이 브라우저는 canvas를 지원하지 않습니다.
+    </canvas>
+</body>
+</html>
