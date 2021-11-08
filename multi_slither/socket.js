@@ -18,7 +18,7 @@ module.exports = (server) => {
             console.log(data);
         })
         socket.interval = setInterval(()=>{
-            socket.emit('news','Hello Socket.IO');
+            socket.emit('news',socket.id);
         }, 3000);
     });
 };
