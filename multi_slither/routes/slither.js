@@ -56,7 +56,8 @@ function  eatFeed( snake ) {
 
 //Snake
 
-var Snake = function() {
+var Snake = function(socket) {
+    this.socketID = socket.id;
     this.x = 0;
     this.y = 0;
     this.xv = 0;

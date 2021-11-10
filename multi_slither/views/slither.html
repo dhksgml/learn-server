@@ -12,14 +12,118 @@
     
     
     <script>
-        const socket = io.connect('http://localhost:8005',{
-            path: '/socket.io',
-            transports: ['websocket'],
+        function Snake(id){
+            this.socketID = id;
+            this.x = 0;
+            this.y = 0;
+            this.xv = 0;
+            this.yv = 0;
+        }
+
+        var snakes = [];
+        var snakeMap = {};
+        var myId;
+
+        function joinUser(id, x, y, xv, yv){
+            let snake = new Snake(id);
+            snake.x = x;
+            snake.y = y;
+            snake.xv = xv;
+            snake.yv = yv;
+
+            snakes.push(snake);
+            snakeMap[id] = snake;
+
+            return snake;
+        }
+
+        var socket = io();
+        
+        socket.on('user_id',function(data){
+            myId = data;
         });
-        socket.on('news',function(data){
-            console.log(data);
-            socket.emit('reply','Hello Node.JS');
-        })
+
+        socket.on('join_user', function(data){
+            joinUser(data.id, data.x, data.y, data.xv, data.yv);
+        });
+
+        function handleInput(){
+            if(!myId){
+                return;
+            }
+            let snake = snakeMap[myId];
+
+            if(!snake){
+                return;
+            }
+
+            sendInput();
+        
+            let xv = 0;
+            let yv = 0;
+
+            if(inputMap['w']){
+                yv = -1;
+            }
+            else{
+                delete inputMap['w'];
+            }
+
+            if(inputMap['s']){
+                yv = 1;
+            }
+            else{
+                delete inputMap['s'];
+            }
+
+            if(inputMap['a']){
+                xv = -1;
+            }
+            else{
+                delete inputMap['a'];
+            }
+
+            if(inputMap['d']){
+                xv = 1;
+            }
+            else{
+                delete inputMap['d'];
+            }
+
+            snake.x += xv;
+            snake.y += yv;
+        }
+
+        function renderGame() {
+            ctx.clearRect(0,0,board.width,board.height);
+
+            for(let i = 0; i < snakes.length; ++i){
+                let snake = snakes[i];
+
+                ctx.fillStyle = "black";
+
+                ctx.beginPath();
+                ctx.fillRect(snake.x, snake.y, 10, 10);
+            }
+        }
+        
+        var board;
+        var ctx;
+
+        function init() {
+            board = document.getElementById('myCanvas');
+            ctx = board.getContext('2d');
+
+            document.addEventListener('keydown',function(event){
+                if(!inputMap[event.key]){
+                    inputMap[event.key] = true;
+                }
+            });
+
+            document.addEventListener('keyup',function(event){
+                inputMap[event.key] = false;
+            });
+        }
     </script>
     
     <style>
