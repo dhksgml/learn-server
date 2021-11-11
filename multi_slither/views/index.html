@@ -22,6 +22,8 @@
         });
         socket.on('news',function(data){
             console.log(data);
+            Snake1.x = data.x;
+            Snake1.y = data.y;
             
             dArr = {id:socket.id, x:Snake1.x, y:Snake1.y, xv:Snake1.xv, yv:Snake1.yv, tailArr:Snake1.tailArr};
             // console.log(dArr)
@@ -106,19 +108,16 @@
             //     if( this.y + 10 > vcanvas.height ) { this.y = vcanvas.height - 10 }
             // }
         
-            this.updateSnake = function(x,y,xv,yv) {
+            this.updateSnake = function() {
                 
-                this.x = x;
-                this.y = y;
-
                 var i;
                 for ( i = this.tailArr.length - 1; i > 0; i -= 1) {
                     this.tailArr[i] = this.tailArr[ i-1 ]
                 }
-                this.tailArr[0] = {x: x, y: y}
+                this.tailArr[0] = {x: this.x, y: this.y}
                 
-                this.x += xv * scl;
-                this.y += yv * scl; 
+                this.x += this.xv * scl;
+                this.y += this.yv * scl; 
             
                 if( this.x < 0 ) { this.x = 0 }
                 if( this.x + 10 > vcanvas.width ) { this.x = vcanvas.width - 10 }
@@ -166,7 +165,15 @@
             
             Snake1.drawSnake();
             update();
-            Snake1.updateSnake(dArr.x, dArr.y, dArr.xv, dArr.yv);
+            Snake1.updateSnake();
+            
+            dArr = {id:Snake1.id, x: Snake1.x, y:Snake1.y, xv:Snake1.xv, yv:Snake1.yv, tailArr:Snake1.tailArr}
+            // dArr.id = Snake1.id;
+            // dArr.x = Snake1.x;
+            // dArr.y = Snake1.y;
+            // dArr.xv = Snake1.xv;
+            // dArr.yv = Snake1.yv;
+            // dArr.tailArr = Snake1.tailArr;
 
             drawFeed();
             eatFeed( Snake1 );

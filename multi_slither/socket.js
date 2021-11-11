@@ -45,6 +45,6 @@ module.exports = (server) => {
         socket.interval = setInterval(()=>{
             // socket.broadcast.emit('news',SnakeArr);
             socket.emit('news',SnakeArr);
-        }, 3000);
+        }, 1000);
     });
 };
