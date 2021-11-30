@@ -13,9 +13,19 @@ io.on('connection', (socket) => {
     console.log('connected');
     console.log(socket.id);
 
+
+    socket.on('snakeArr',(dataSnake)=>{
+        io.emit('snakeArr', dataSnake)
+    })
+
     socket.on('snakeLocation', (dataSnake) => {
         io.emit('snakeLocation', dataSnake);
     });
+
+    socket.on('feedLocation', (dataFood) => {
+        io.emit('feedLocation', dataFood);
+    });
+
 
     socket.on('disconnect', () => {
         console.log('disconnected');
