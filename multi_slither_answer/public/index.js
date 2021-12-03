@@ -8,7 +8,6 @@ var Snake; //각각의 뱀
 var scl = 10;
 var socket = io();
 
-
 var SnakeMove = {x:null, y:null, xv:null, yv:null}
 
 function sendData() {
@@ -20,10 +19,10 @@ function init() {
     vcanvas = document.getElementById('myCanvas');
     ctx = vcanvas.getContext('2d');
 
-    Snake = new Snake();
+    // Snake = new Snake();
+    // SnakeArr.push(Snake);
 
     setInterval(gameLoop,100);
-    // setInterval(createFeed,100);
 }
 
 
@@ -172,12 +171,40 @@ socket.on('feedLocation', (foodData) => {
 });
 
 
-socket.on('snakeArr', (snakeData) => {
+socket.on('getId', (snakeId) => {
     const num = SnakeArr.findIndex((i) => {
-        console.log(i.id)
-        return i.id == snakeData.id
+        return SnakeArr[i].id == snakeId.id;
     });
-    if(num == -1)
-        SnakeArr.push(snakeData);
+    if(num == -1 ){
+        Snake = new Snake();
+        Snake.id = snakeId.id;
+        SnakeArr.push(Snake);
+        socket.emit('sendSnakeArr',SnakeArr);
+    }
+    
+    // console.log(num)
+    // console.log(snakeId.id);
+    // console.log(Snake.id);
 });
+
+socket.on('getSnakeArr',(dataSnakeArr)=>{
+    SnakeArr = dataSnakeArr;
+    console.log(SnakeArr)
+})
+
+
+// socket.on('first Respond', req => {
+//     console.log(req);
+// });
+
+// socket.on('snakeArr',(id)=>{
+//     console.log(id);
+// })
+// socket.on('snakeArr', (snakeData) => {
+//     const num = SnakeArr.findIndex((i) => {
+//         return i.id == snakeData.id
+//     });
+//     if(num == -1)
+//         SnakeArr.push(snakeData);
+// });
 

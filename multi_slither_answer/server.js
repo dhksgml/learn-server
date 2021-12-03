@@ -11,11 +11,28 @@ var io = socket(server);
 
 io.on('connection', (socket) => {
     console.log('connected');
-    console.log(socket.id);
+    // console.log(socket.id);
 
+    
+    socket.emit('getId',{id:socket.id})
 
-    socket.on('snakeArr',(dataSnake)=>{
-        io.emit('snakeArr', dataSnake)
+    // socket.on("sendId", (data) => {
+    //     console.log(data)
+    //     socket.emit('getId',data);
+    // })
+
+    // socket.on("first Request", req => {
+    //     console.log(req);
+    //     socket.emit('first Respond', {data: 'firstRespond'});
+    // })
+
+    
+    socket.on('keyEvent',(dataKey)=>{
+        io.emit('keyEvent',dataKey);
+    })
+
+    socket.on('sendSnakeArr',(dataSnakeArr)=>{
+        io.emit('getSnakeArret',dataSnakeArr);
     })
 
     socket.on('snakeLocation', (dataSnake) => {
