@@ -3,6 +3,8 @@ var socket = require('socket.io');
 
 var app = express();
 var server = app.listen(8005);
+var players = [];
+var id = [];
 
 app.use(express.static('public'));
 console.log('연결됨');
@@ -13,38 +15,69 @@ io.on('connection', (socket) => {
     console.log('connected');
     // console.log(socket.id);
 
+    // id = socket.id;
+    // console.log(id)
+   
+    socket.emit('getId',socket.id);
+    // if(id.length == 0){
+    //     id.push(socket.id)
+    //     socket.emit('getId',id[0]);
+    // }
     
-    socket.emit('getId',{id:socket.id})
-
-    // socket.on("sendId", (data) => {
-    //     console.log(data)
-    //     socket.emit('getId',data);
+    // id.forEach(function(e){
+    //     if(e === socket.id){
+    //         var index = id.indexOf(e);
+    //         io.emit('getId',id[index])
+    //     }
+    // })
+        
+    
+    // socket.on('snakeArr',(dataSnake)=>{
+    //     io.emit('snakeArr', dataSnake)
     // })
 
-    // socket.on("first Request", req => {
-    //     console.log(req);
-    //     socket.emit('first Respond', {data: 'firstRespond'});
+    // socket.emit('sendFeed', (dataFood)=>{
+    //     io.emit('sendFeed', dataFood);
     // })
-
     
-    socket.on('keyEvent',(dataKey)=>{
-        io.emit('keyEvent',dataKey);
-    })
-
-    socket.on('sendSnakeArr',(dataSnakeArr)=>{
-        io.emit('getSnakeArret',dataSnakeArr);
-    })
 
     socket.on('snakeLocation', (dataSnake) => {
-        io.emit('snakeLocation', dataSnake);
+        // console.log(id)
+        dataSnake.id = id
+        if(players.length === 0){
+            players.push(dataSnake);
+        }else{
+            for(var j = 0; j < players.length; j++){
+                if(players[j].id === dataSnake.id){
+                    players[j] = dataSnake;
+                    break;
+                }
+                if(j===players.length - 1){
+                    players.push(dataSnake);
+                }
+            }
+            
+        }
+        io.emit('snakeLocation', players);
+    });
+
+    socket.on('keyEvent',(dataKey)=>{
+        io.emit('keyEvent', dataKey);
     });
 
     socket.on('feedLocation', (dataFood) => {
         io.emit('feedLocation', dataFood);
     });
 
+    
 
     socket.on('disconnect', () => {
         console.log('disconnected');
+        players.forEach((element)=>{
+            if(element.id === socket.id){
+                var index = players.indexOf(element);
+                players.splice(index, 1);
+            }
+        });
     });
 });
