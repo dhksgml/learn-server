@@ -84,7 +84,7 @@ function gameLoop() {
     
     Snake.drawSnake();
 
-    console.log(Snake.id)
+    // console.log(Snake.id)
     sendData();
 }
 
@@ -188,7 +188,7 @@ socket.on('snakeLocation', (snakeArrData) => {
     //     }
     // }
     snakeArrData.forEach((e)=>{
-        if(e.id === socket.id){
+        if(e.id === Snake.id){
             var index = snakeArrData.indexOf(e);
             snakeArrData.splice(index,1);
             for(var j in snakeArrData){
@@ -206,9 +206,9 @@ socket.on('snakeLocation', (snakeArrData) => {
     
 });
 
-socket.on('getId',(dataId)=>{
-    Snake.id = dataId
-})
+// socket.on('getId',(dataId)=>{
+//     Snake.id = dataId
+// })
 socket.on('feedLocation', (foodData) => {
     //feedArr = foodData
     const num = feedArr.findIndex((i) => {

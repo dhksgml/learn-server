@@ -4,7 +4,7 @@ var socket = require('socket.io');
 var app = express();
 var server = app.listen(8005);
 var players = [];
-var id = [];
+
 
 app.use(express.static('public'));
 console.log('연결됨');
@@ -43,7 +43,6 @@ io.on('connection', (socket) => {
 
     socket.on('snakeLocation', (dataSnake) => {
         // console.log(id)
-        dataSnake.id = id
         if(players.length === 0){
             players.push(dataSnake);
         }else{
@@ -62,7 +61,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('keyEvent',(dataKey)=>{
-        io.emit('keyEvent', dataKey);
+        socket.emit('keyEvent', dataKey);
     });
 
     socket.on('feedLocation', (dataFood) => {
