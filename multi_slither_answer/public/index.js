@@ -22,6 +22,7 @@ var Snake = function() {
     this.xv = 0;        //뱀의 x축 방향
     this.yv = 0;        //뱀의 y축 방향
     this.tailArr = [];  //뱀 꼬리
+    this.isDie = false;
 
     //서버에서 id를 받아오기 위한 이벤트 - (this.id 선언할 때 soket.io로 초기화 하면 실행 순서 때문에 undefined 값이 들어감)
     socket.on('getId',(id) => {
@@ -62,6 +63,7 @@ var Snake = function() {
         this.xv = x;
         this.yv = y;
     }
+
 
 }
 
@@ -106,7 +108,10 @@ function gameLoop() {
 
     update();                       //키 입력을 받아 방향 설정
     Snake.updateSnake();            //변경된 위치 적용
+
+    die()
 }
+
 
 function init() {
 
@@ -117,6 +122,21 @@ function init() {
     SnakeArr.push(Snake)            //지렁이 배열에 추가
     setInterval(gameLoop,100);      //게임 루프
 }
+
+//gameEvent
+function die() {
+    for(let i = 0; i < SnakeArr.length; i++){
+        for(let j = 0; j < SnakeArr[i].tailArr.length; j++){
+            if(Snake.id != SnakeArr[i].id){
+                if(Snake.x == SnakeArr[i].tailArr[j].x && Snake.y == SnakeArr[i].tailArr[j].y){
+                    Snake.isDie = true;
+                    alert("사망!!")
+                }
+            }
+        }
+    }
+}
+
 
 //feed
 
@@ -237,5 +257,7 @@ socket.on('feedLocation', (foodArrData) => {
 socket.on('keyEvent',(keyData)=>{
     key = keyData;
 });
+
+
 
 
