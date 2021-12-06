@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slither</title>
+    <script src="http://localhost:8005/socket.io/socket.io.js"></script>
+    <script src="index.js"></script>
+    <style>
+        html, body{
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        canvas{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -250px 0 0 -250px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body onload="init()">
+    <canvas id="myCanvas" width="500" height="500">
+        이 브라우저는 canvas를 지원하지 않습니다.
+    </canvas>
+</body>
+</html>
